@@ -3,5 +3,10 @@
 @section('header', 'Статьи')
 
 @section('content')
-    <p>Тут будут статьи</p>
+    
+    @foreach ($articles as $article)
+    <h1>{{ $article->name }}</h1>
+    <p>{{ $article->body }}</p>
+    @endforeach
+
 @endsection
