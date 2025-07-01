@@ -35,12 +35,6 @@ class ArticleController extends Controller
         // Проверка введенных данных
         // Если будут ошибки, то возникнет исключение
         // Иначе возвращаются данные формы
-        /*
-        $data = $request->validate([
-            'name' => 'required|unique:articles',
-            'body' => 'required|min:1000',
-        ]);
-*/
         $data = $request->validated();
         $article = new Article();
         // Заполнение статьи данными из формы
@@ -63,16 +57,7 @@ class ArticleController extends Controller
     public function update(StoreArticleRequest $request, $articleId)
     {
         $article = Article::findOrFail($articleId);
-        /*$data = $request->validate([
-            // У обновления немного измененная валидация
-            // В проверку уникальности добавляется название поля и id текущего объекта
-            // Если этого не сделать, Laravel будет ругаться, что имя уже существует
-            'name' => "required|unique:articles,name,{$article->id}",
-            'body' => 'required|min:100',
-        ]);
-*/
         $data = $request->validated();
-        
 
         $article->fill($data);
         $article->save();
@@ -80,5 +65,18 @@ class ArticleController extends Controller
         return redirect()
             ->route('articles.index')
             ->with('success', 'Article updated successfully');
+    }
+
+    public function destroy($articleId)
+    {
+        // DELETE — идемпотентный метод, поэтому результат операции всегда один и тот же
+        $article = Article::find($articleId);
+        
+        if ($article) {
+            $article->delete();
+        }
+        return redirect()
+            ->route('articles.index')
+            ->with('success', 'Article removed successfully');
     }
 }

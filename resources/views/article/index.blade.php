@@ -20,10 +20,10 @@
                 @foreach($articles as $article)
                     <tr>
                         <td>{{ $article->id }}</td>
-                        <td><a class="text-decoration-none" href="{{ route('articles.show', $article->id) }}">{{ $article->name }}</a></td>
+                        <td><a class="text-decoration-none" href="{{ route('articles.destroy', $article->id) }}">{{ $article->name }}</a></td>
                         <td>
                             <a class="text-decoration-none" href="{{ route('articles.edit', $article->id) }}">Редактировать</a>
-                            <a class="text-decoration-none link-danger" href="{{ route('articles.edit', $article->id) }}" data-confirm="Are you sure?" data-method="delete">Удалить</a>
+                            <a class="text-decoration-none link-danger" href="{{ route('articles.destroy', $article->id) }}" data-confirm="Are you sure?" data-method="delete">Удалить</a>
                         </td>
                     </tr>
                 @endforeach
